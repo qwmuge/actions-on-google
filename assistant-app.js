@@ -759,7 +759,7 @@ class AssistantApp {
       };
     }
     if (transactionConfig && (transactionConfig.type ||
-      transactionConfig.cardNetworks || transactionsConfig.facilitationSpec)) {
+      transactionConfig.cardNetworks || transactionConfig.facilitationSpec)) {
       transactionRequirementsCheckSpec.paymentOptions =
         this.buildPaymentOptions_(transactionConfig);
     }
@@ -830,7 +830,7 @@ class AssistantApp {
       };
     }
     if (transactionConfig && (transactionConfig.type ||
-      transactionConfig.cardNetworks || transactionsConfig.facilitationSpec)) {
+      transactionConfig.cardNetworks || transactionConfig.facilitationSpec)) {
       transactionDecisionValueSpec.paymentOptions =
         this.buildPaymentOptions_(transactionConfig);
     }
