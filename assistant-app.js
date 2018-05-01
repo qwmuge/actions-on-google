@@ -2777,7 +2777,9 @@ class AssistantApp {
         displayName: transactionConfig.displayName
       };
     } else if (transactionConfig.facilitationSpec) { // Google payment specified by facilitation JSON
-      paymentOptions.facilitationSpec = transactionConfig.facilitationSpec;
+      paymentOptions.googleProvidedOptions = {
+        facilitationSpec: transactionConfig.facilitationSpec
+      };
     } else { // Google payment specified by legacy fields
       paymentOptions.googleProvidedOptions = {
         supportedCardNetworks: transactionConfig.cardNetworks,
