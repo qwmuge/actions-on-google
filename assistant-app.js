@@ -743,7 +743,7 @@ class AssistantApp {
    * @dialogflow
    */
   askForTransactionRequirements (transactionConfig, dialogState) {
-    debug('checkForTransactionRequirements HAHAHAHAHA: transactionConfig=%s,' +
+    debug('checkForTransactionRequirements: transactionConfig=%s,' +
       ' dialogState=%s',
       JSON.stringify(transactionConfig), JSON.stringify(dialogState));
     if (transactionConfig && transactionConfig.type &&
@@ -759,7 +759,7 @@ class AssistantApp {
       };
     }
     if (transactionConfig && (transactionConfig.type ||
-      transactionConfig.cardNetworks)) {
+      transactionConfig.cardNetworks || transactionsConfig.facilitationSpec)) {
       transactionRequirementsCheckSpec.paymentOptions =
         this.buildPaymentOptions_(transactionConfig);
     }
@@ -830,7 +830,7 @@ class AssistantApp {
       };
     }
     if (transactionConfig && (transactionConfig.type ||
-      transactionConfig.cardNetworks)) {
+      transactionConfig.cardNetworks || transactionsConfig.facilitationSpec)) {
       transactionDecisionValueSpec.paymentOptions =
         this.buildPaymentOptions_(transactionConfig);
     }
@@ -1809,7 +1809,7 @@ class AssistantApp {
    * @actionssdk
    */
   getTransactionRequirementsResult () {
-    debug('getTransactionRequirementsResult HAHAHAHAHHA');
+    debug('getTransactionRequirementsResult');
     const argument = this.findArgument_(this.BuiltInArgNames.TRANSACTION_REQ_CHECK_RESULT);
     if (argument && argument.extension && argument.extension.resultType) {
       return argument.extension.resultType;
@@ -2776,7 +2776,9 @@ class AssistantApp {
         paymentType: transactionConfig.type,
         displayName: transactionConfig.displayName
       };
-    } else { // Google payment
+    } else if (transactionConfig.facilitationSpec) { // Google payment specified by facilitation JSON
+      paymentOptions.facilitationSpec = transactionConfig.facilitationSpec;
+    } else { // Google payment specified by legacy fields
       paymentOptions.googleProvidedOptions = {
         supportedCardNetworks: transactionConfig.cardNetworks,
         prepaidCardDisallowed: transactionConfig.prepaidCardDisallowed
